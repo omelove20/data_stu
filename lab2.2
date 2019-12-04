@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+int x, Qnumber = 0,F,R;
+char status = 'N';
+char ch;
+
+int Inputsize( ){
+	int x;
+	printf("Enter Number size : ");
+	scanf("%d",&x);
+	printf("\n====================================\n");
+	return(x+1);
+	}
+
+void insertCQ(int y,int N,int Q[]){
+	if((R == F-1) || (F == (N-1)-R+1 && R == (N-1)-F+1) ){
+		printf("!!!OVER FLOW!!!\n");
+		status = 'O';
+	}
+	else{
+		if(R == N-(N-1)){
+			R = N-1;
+		}
+		else
+		{
+			R--;
+			if(F == N)
+				F = N-1;
+		}
+		Qnumber--;
+		if(Qnumber <= 0)
+			Qnumber = N-1 ;
+		printf("Your are queue number :%d\n",Qnumber);
+		Q[R] = y;
+		status = 'N';
+	}
+}
+int deleteCQ(int N,int Q[]){
+	int y;
+	if(F == N-1 && R == N-1){
+		F = N-1 ; R = N-1 ;
+		printf("\n!!!UNDER FLOW!!!...\n");
+		status = 'U';
+	}
+	else{
+		y = Q[F];
+		Q[F]=0;
+		if(F == R){
+			F = N-1; R = N-1;
+		}
+		else{
+			if(F == N-(N-1))
+				F=N-1;
+			else	
+				F--;
+		}
+		status = 'N';
+		return(y);
+	}
+}
+int DataInQueue(int N,int Q[]){
+	int y = 0;
+	if(F != 0 && R != 0){
+		if( F >= R)
+			y = F-R+1;
+		else
+			y = ((N-1)-R+1)+F ;
+	}
+	return(y);
+}
+void ShowAllQueue(int N,int Q[]){
+	int i;
+	printf("N :%d\n",N-1);
+	printf("Status =%c \n",status);
+	printf("Data waiting in queue =%d\n",DataInQueue(N,Q));
+	printf("F = %d | R = %d\n",F,R);
+	for(i = 1 ; i < N ; i++){
+		printf(" %d : %d |",i,Q[i]);	
+	}
+		printf("\n----------------------------\n");
+}
+
+int main(){
+	printf("CICULAR QUEUE PROGRAM...\n");
+	printf("========================\n");
+	ch = ' ';
+	int N=Inputsize();
+	int Q[N]={};
+	R=N;
+	F=N;
+	while(ch != 'E'){
+		ch = getch();
+		system("cls");	
+		printf("\n[ 1 = insert : 2 = Delete E = Exit ] : ");
+		switch(ch){
+			case'1':	printf("\nInsert Number : ");
+						scanf("%d",&x);
+						insertCQ(x,N,Q);
+						ShowAllQueue(N,Q);
+						break;
+			case'2':	x=deleteCQ(N,Q);
+						printf("\nData from Queue =%d\n",x);
+						ShowAllQueue(N,Q);
+						break;
+					
+			}
+	}
+		printf("\n");
+		return(0);
+	
+}
