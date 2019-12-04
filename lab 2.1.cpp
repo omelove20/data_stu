@@ -5,51 +5,61 @@
 
 int stack[MaxStack];
 int x;
-int SP=0;
+int SP;
 char status = 'N';
 char ch;
 int size;
-
-void push(int x)
+int cyloop;
+int push(int x)
 	{
-		if(SP == size-1)
+		if(cyloop == 0)
 			{
 			printf("!!!OVER FLOW!!!...\n");
 			status='O';
+			getch();
 			}
 		else
 			{
-			SP=SP+1;
-			stack[SP]=x;
+			stack[SP-1] = x;
+			SP = SP-1;
+			status='N';
+			return(SP-1);
 			}
 	}
+
 int pop()
 	{
 	int x;
-	if(SP !=0)
+	if(SP != size)
 		{
 		x=stack[SP];
 		stack[SP]=0;
-		SP--;
+		SP++;
+		status='N';
 		return(x);
 		}
 	else
 		{
 		printf("\n!!!UNDER FLOW!!!...\n");
 		status='U';
+		getch();
 		}
 	}
 void showAllStack()
-	{
-	int i;
-	printf(" %-10s:%d\n","N",size-1);
-	printf(" %-10s:%c\n","Status",status);
-	printf(" %-10s:%d\n","SP",SP);
-	for(i=1;i<size;i++)
-		{
-		printf("%d:%d  ",i,stack[i]);
-		}
-	printf("\n---------------------------------\n");
+	{	
+		for(int j=1;j<size;j++)
+			{	
+			system("cls");	
+			int i;
+			printf(" %-10s:%d\n","N",size-1);
+			printf(" %-10s:%c\n","Status",status);
+			printf(" %-10s:%d\n","SP",SP);
+			for(i=1;i<size;i++)
+				{
+				printf("%d:%d  ",i,stack[i]);
+				}
+			printf("\n---------------------------------\n");
+			}
 	}
 	
 int Inputsize()
@@ -61,34 +71,70 @@ int Inputsize()
 	return(x+1);
 	}
 	
+void SW(){
+	switch(ch)
+				{
+				case '1':	printf("\nEnter Number : ");
+							scanf("%d",&x);
+							cyloop = push(x);showAllStack();
+							break;
+				case '2':	x=pop();
+							printf("\nData :%d\n",x);showAllStack();
+							break;
+				}
+	
+}
+void SWO(){
+	switch(ch)
+				{
+				case '1':	showAllStack();
+							break;
+				case '2':	x=pop();
+							printf("\nData :%d\n",x);showAllStack();
+							break;
+				}
+	
+}
+void SWU(){
+	switch(ch)
+				{
+				case '1':	printf("\nEnter Number : ");
+							scanf("%d",&x);
+							cyloop = push(x);showAllStack();
+							break;
+				case '2':	showAllStack();
+							break;
+				}
+	
+}
 int main()
 	{
-	printf("STACK PROGRAM...\n");
-	printf("====================================\n");
 	size=Inputsize();
-	while(status=='N')
-		{
-		printf("[1=PUSH    :2=POP]:");
-		ch = getch();
-		switch(ch)
+	SP=size;
+	cyloop=SP;
+
+		while(status=='N')
 			{
-			case '1':	printf("\nEnter Number : ");
-						scanf("%d",&x);
-						push(x);
-						showAllStack();
-						break;
-			case '2':	x=pop();
-						printf("\nData :%d\n",x);
-						showAllStack();
-						break;
+			printf("[1=PUSH    :2=POP]:");
+			ch = getch();
+			SW();
+			while(status=='O')
+			{
+			printf("[1=PUSH    :2=POP]:");
+			ch = getch();
+			SWO();
+	//		break;
 			}
-		getch();
-		system("cls");
-		printf("STACK PROGRAM...\n");
-		printf("====================================\n");
-		printf("Enter Number size : %d",size-1);
-		printf("\n====================================\n");
-		}
+		while(status=='U')
+			{
+			printf("[1=PUSH    :2=POP]:");
+			ch = getch();
+			SWU();
+	//		break;
+			}
+			}
+		
+		
 	printf("\n");
 	return(0);
 	}
