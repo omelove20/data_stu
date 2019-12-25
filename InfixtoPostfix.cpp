@@ -57,7 +57,6 @@ int precedenceST(char oper){
 		case'(':return(0);
 	}
 }
-
 int changeIP(char oper){
 	switch(oper){
 		case'+':return(1);
@@ -68,7 +67,6 @@ int changeIP(char oper){
 		case'(':return(4);
 	}
 }
-
 int changeIP10(char oper){
 	switch(oper){
 		case'+':return(5);
@@ -80,7 +78,6 @@ int changeIP10(char oper){
 		default :return(0);
 	}
 }
-
 int changeST(char oper){
 	switch(oper){
 		case'+':return(1);
@@ -132,7 +129,6 @@ void infixTOpostfix(char infix2[80]){
 		printf ("%s",cp) ;
 		
 }
-
 void pushA(float ValOperand){
 	if(SPA == MaxStack){
 		printf("ERROR STACK OVER FLOW!!!\n");
@@ -165,9 +161,9 @@ void CalPostfix(char postfix[80]){
 		ch = postfix[i];
 		if(strchr("+-*/^",ch)==0)
 		{
-			if((ch >= 48) && ( ch <= 57) ){	
+		/*	if((ch >= 48) && ( ch <= 57) ){	
 				ValPostfix[i] = int(ch)-48;	
-			}else{
+			}else{*/
 				bool check = 0;
 				int j = i-1;
 				while (j>=0)
@@ -191,10 +187,6 @@ void CalPostfix(char postfix[80]){
 					if(x==y){
 						printf("\nAssigh Number to %c :",ch);
 						scanf("%f",&ValPostfix[i]);
-						if(ValPostfix[i]==0 ||ValPostfix[i]==1 ||ValPostfix[i]==2 ||ValPostfix[i]==3 ||ValPostfix[i]==4 ||ValPostfix[i]==5 ||ValPostfix[i]==6 ||ValPostfix[i]==7 ||ValPostfix[i]==8 ||ValPostfix[i]==9){
-						printf("\nError Not Number \n");
-						i=len-1;
-						}
 					}
 					else{
 						printf("\nError Brackets over \n");
@@ -204,7 +196,7 @@ void CalPostfix(char postfix[80]){
 				}
 			}
 		}
-	}
+//	}
 	
 	for(i=0;i<=len-1;i++){
 		ch=postfix[i];
@@ -255,8 +247,27 @@ int chackoperan(char infix2[80]){
 	}
 	return 1;
 }
+
+int chackoperator(char infix3[80]){
+	char ch1[80],ch2[80];
+	int len,i,x,y;
+	len = strlen(infix1);
+	for( i=0 ; i<=len ; i++){
+		strcpy(ch1,infix3);
+		strcpy(ch2,infix3);
+		
+		if(ch1[i]=='A' || ch1[i]=='B' || ch1[i]=='C' || ch1[i]=='D' || ch1[i]=='E' || ch1[i]=='F' || ch1[i]=='G' || ch1[i]=='H' || ch1[i]=='I' || ch1[i]=='J' || ch1[i]=='K' || ch1[i]=='L' || ch1[i]=='M' || ch1[i]=='N' || ch1[i]=='O' || ch1[i]=='P' || ch1[i]=='Q' || ch1[i]=='R' || ch1[i]=='S' || ch1[i]=='T' || ch1[i]=='U' || ch1[i]=='V' || ch1[i]=='W' || ch1[i]=='X' || ch1[i]=='Y' || ch1[i]=='Z'){
+			if(ch2[i+1]=='A' || ch2[i+1]=='B' || ch2[i+1]=='C' || ch2[i+1]=='D' || ch2[i+1]=='E' || ch2[i+1]=='F' || ch2[i+1]=='G' || ch2[i+1]=='H' || ch2[i+1]=='I' || ch2[i+1]=='J' || ch2[i+1]=='K' || ch2[i+1]=='L' || ch2[i+1]=='M' || ch2[i+1]=='N' || ch2[i+1]=='O' || ch2[i+1]=='P' || ch2[i+1]=='Q' || ch2[i+1]=='R' || ch2[i+1]=='S' || ch2[i+1]=='T' || ch2[i+1]=='U' || ch2[i+1]=='V' || ch2[i+1]=='W' || ch2[i+1]=='X' || ch2[i+1]=='Y' || ch2[i+1]=='Z'){
+				printf("\nError not Operator\n");
+				return 0;
+			}
+		}
+		return 1;
+	}
+}
+
 int vonloop(){
-	int b;
+	int b,c;
 		printf ("== INFIX TO POSTFIX PROGRAME ==\n\n") ;
 		printf ("Input INFIX : ") ;
 		scanf ("%s",infix1) ;
@@ -264,8 +275,11 @@ int vonloop(){
 		printf("\n\nPOSTFIX CALCULATION PROGRAM\n");
 		printf("===========================\n");
 		b=chackoperan(infix1);
-		if(b==1){
+		c=chackoperator(infix1);
+		if(c==1){
+			if(b==1){
 			CalPostfix(cp);
+			}	
 		}
 		
 }
